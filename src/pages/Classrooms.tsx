@@ -108,17 +108,17 @@ const classroomData = [
 
 export default function Classrooms() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const [buildingFilter, setBuildingFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [buildingFilter, setBuildingFilter] = useState("all");
 
   const filteredClassrooms = classroomData.filter(room => {
     const matchesSearch = room.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          room.building.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          room.type.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = !typeFilter || room.type === typeFilter;
-    const matchesStatus = !statusFilter || room.status === statusFilter;
-    const matchesBuilding = !buildingFilter || room.building === buildingFilter;
+    const matchesType = typeFilter === "all" || room.type === typeFilter;
+    const matchesStatus = statusFilter === "all" || room.status === statusFilter;
+    const matchesBuilding = buildingFilter === "all" || room.building === buildingFilter;
     
     return matchesSearch && matchesType && matchesStatus && matchesBuilding;
   });
@@ -266,7 +266,7 @@ export default function Classrooms() {
                 <SelectValue placeholder="Room type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="Classroom">Classroom</SelectItem>
                 <SelectItem value="Computer Lab">Computer Lab</SelectItem>
                 <SelectItem value="Laboratory">Laboratory</SelectItem>
@@ -279,7 +279,7 @@ export default function Classrooms() {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="Available">Available</SelectItem>
                 <SelectItem value="Occupied">Occupied</SelectItem>
                 <SelectItem value="Maintenance">Maintenance</SelectItem>
@@ -290,7 +290,7 @@ export default function Classrooms() {
                 <SelectValue placeholder="Building" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Buildings</SelectItem>
+                <SelectItem value="all">All Buildings</SelectItem>
                 <SelectItem value="Main Block">Main Block</SelectItem>
                 <SelectItem value="Tech Block">Tech Block</SelectItem>
                 <SelectItem value="Academic Block">Academic Block</SelectItem>

@@ -80,15 +80,15 @@ const facultyMembers = [
 
 export default function FacultyAllocation() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [departmentFilter, setDepartmentFilter] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
+  const [departmentFilter, setDepartmentFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const filteredFaculty = facultyMembers.filter(faculty => {
     const matchesSearch = faculty.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          faculty.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          faculty.subjects.some(subject => subject.toLowerCase().includes(searchQuery.toLowerCase()));
-    const matchesDepartment = !departmentFilter || faculty.department === departmentFilter;
-    const matchesStatus = !statusFilter || faculty.availability === statusFilter;
+    const matchesDepartment = departmentFilter === "all" || faculty.department === departmentFilter;
+    const matchesStatus = statusFilter === "all" || faculty.availability === statusFilter;
     
     return matchesSearch && matchesDepartment && matchesStatus;
   });
@@ -231,7 +231,7 @@ export default function FacultyAllocation() {
                 <SelectValue placeholder="Filter by department" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Departments</SelectItem>
+                <SelectItem value="all">All Departments</SelectItem>
                 <SelectItem value="Computer Science">Computer Science</SelectItem>
                 <SelectItem value="Electrical Engineering">Electrical Engineering</SelectItem>
                 <SelectItem value="Mechanical Engineering">Mechanical Engineering</SelectItem>
@@ -242,7 +242,7 @@ export default function FacultyAllocation() {
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="Available">Available</SelectItem>
                 <SelectItem value="Overloaded">Overloaded</SelectItem>
                 <SelectItem value="Underutilized">Underutilized</SelectItem>

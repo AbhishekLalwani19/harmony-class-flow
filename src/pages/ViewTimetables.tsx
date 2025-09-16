@@ -68,15 +68,15 @@ const weeklySchedule = [
 
 export default function ViewTimetables() {
   const [selectedTimetable, setSelectedTimetable] = useState<string | null>(null);
-  const [filterClass, setFilterClass] = useState<string>("");
-  const [filterBatch, setFilterBatch] = useState<string>("");
+  const [filterClass, setFilterClass] = useState<string>("all");
+  const [filterBatch, setFilterBatch] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const filteredTimetables = sampleTimetables.filter(timetable => {
     const matchesSearch = timetable.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          timetable.class.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesClass = !filterClass || timetable.class === filterClass;
-    const matchesBatch = !filterBatch || timetable.batch === filterBatch;
+    const matchesClass = filterClass === "all" || timetable.class === filterClass;
+    const matchesBatch = filterBatch === "all" || timetable.batch === filterBatch;
     
     return matchesSearch && matchesClass && matchesBatch;
   });
@@ -125,7 +125,7 @@ export default function ViewTimetables() {
                 <SelectValue placeholder="Filter by class" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Classes</SelectItem>
+                <SelectItem value="all">All Classes</SelectItem>
                 <SelectItem value="Computer Science">Computer Science</SelectItem>
                 <SelectItem value="Electrical Engineering">Electrical Engineering</SelectItem>
                 <SelectItem value="Mechanical Engineering">Mechanical Engineering</SelectItem>
@@ -136,7 +136,7 @@ export default function ViewTimetables() {
                 <SelectValue placeholder="Filter by batch" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Batches</SelectItem>
+                <SelectItem value="all">All Batches</SelectItem>
                 <SelectItem value="2024">2024</SelectItem>
                 <SelectItem value="2023">2023</SelectItem>
                 <SelectItem value="2022">2022</SelectItem>
